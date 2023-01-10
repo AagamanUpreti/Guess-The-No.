@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guess the Number</title>
+    <style>
+      /* Add CSS to style the game elements */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+      }
+      label {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      input[type="number"] {
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      #feedback {
+        font-size: 18px;
+        margin: 10px;
+        text-align: center;
+      }
+      #feedback.success {
+        color: green;
+      }
+      #feedback.warning {
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Guess the Number</h1>
+    <form>
+      <label for="guess">Enter your guess (1-100):</label>
+      <input type="number" id="guess" name="guess" min="1" max="100">
+      <button type="submit">Guess</button>
+    </form>
+    <p id="feedback"></p>
+    
+    <script>
+      // JavaScript to add interactivity to the game
+      const form = document.querySelector('form');
+      const feedback = document.querySelector('#feedback');
+      const targetNumber = Math.floor(Math.random() * 100) + 1; // random number between 1-100
+      let guessCount = 0;
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        guessCount++;
+        const guess = Number(form.guess.value);
+        if (guess === targetNumber) {
+          feedback.textContent = `Congratulations, you guessed the number in ${guessCount} attempts!`;
+          feedback.classList.add("success");
+        } else if (guess > targetNumber) {
+          feedback.textContent = `Too High! You have ${5-guessCount} attempts left`;
+          feedback.classList.add("warning");
+        } else {
+          feedback.textContent = `Too Low! You have ${5-guessCount} attempts left`;
+          feedback.classList.add("warning");
+        }
+        if(guessCount>=5){
+          feedback.textContent = `You used all your attempts! The number was ${targetNumber}`
+        }
+      });
+    </script>
+  </body>
+</html>
